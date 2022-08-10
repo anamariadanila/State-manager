@@ -1,4 +1,4 @@
-import { ACTIONS } from "./constants";
+import { ACTIONS } from "../constants";
 
 class MainStore {
   counterValue = 0;
