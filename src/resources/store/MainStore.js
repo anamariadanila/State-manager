@@ -4,12 +4,26 @@ class MainStore {
   counterValue = 0;
   subs = [];
 
+  get getCounter() {
+    return this.counterValue;
+  }
+
+  set updateCounter(value) {
+    this.counterValue = value;
+  }
+
   findSub(id) {
     return this.subs.findIndex((el) => el?.id === id);
   }
 
+  isSubscribed(id) {
+    const index = this.findSub(id);
+
+    return index === -1 ? false : true;
+  }
+
   subscribe(id, fn) {
-    if (this.findSub(id) > -1) {
+    if (this.isSubscribed(id)) {
       console.log("Already subscribed this component!");
     }
 
@@ -20,24 +34,35 @@ class MainStore {
     const index = this.findSub(id);
     if (index > -1) {
       this.subs.splice(index, 1);
+    } else {
+      console.log(
+        "Seems that this component doesn't appear in the subscribers list"
+      );
     }
   }
 
   publish(type, payload) {
     this.actionHandlers(type, payload);
 
-    this.subs.forEach((sub) => sub.callback(this.counterValue));
+    this.subs.forEach((sub) => sub.callback(this.getCounter));
+  }
+
+  increment(value) {
+    this.updateCounter = this.getCounter + value;
+  }
+
+  decrement(value) {
+    this.updateCounter = this.getCounter - value;
   }
 
   actionHandlers(type, payload) {
-    console.log(type);
     switch (type) {
       case ACTIONS.increment: {
-        this.counterValue += payload;
+        this.increment(payload);
         break;
       }
       case ACTIONS.decrement: {
-        this.counterValue -= payload;
+        this.decrement(payload);
         break;
       }
       default: {

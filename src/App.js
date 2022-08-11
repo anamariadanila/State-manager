@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 
 import FirstCounter from "./components/FirstCounter";
 import SecondCounter from "./components/SecondCounter";
-import ThirdCounter from "./components/ThirdCounter";
+import GlobalCountDisplayer from "./components/GlobalCountDisplayer";
 
 import { CounterProvider } from "./resources/context/CounterContext";
 
@@ -21,8 +21,8 @@ function App() {
         }}
       >
         <FirstCounter />
+        <GlobalCountDisplayer />
         <SecondCounter />
-        <ThirdCounter />
       </Box>
     </CounterProvider>
   );

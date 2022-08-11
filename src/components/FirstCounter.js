@@ -14,16 +14,41 @@ const FirstCounter = () => {
     setValue(data);
   };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   store.subscribe("counter", callback);
+  //   // return store.unsubscribe("counter", callback);
+  // }, [store]);
+
+  const handleSubscribe = () => {
     store.subscribe("counter", callback);
-    // return store.unsubscribe("counter", callback);
-  }, [store]);
+    setValue(store.counterValue);
+  };
+
+  const handleUnsubscribe = () => store.unsubscribe("counter");
+
+  const handleIncrement = () => {
+    if (store.isSubscribed("counter")) {
+      store.publish(ACTIONS.increment, 1);
+    } else {
+      setValue(value + 1);
+    }
+  };
+
+  const handleDecrement = () => {
+    if (store.isSubscribed("counter")) {
+      store.publish(ACTIONS.decrement, 1);
+    } else {
+      setValue(value - 1);
+    }
+  };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      <Button onClick={() => store.publish(ACTIONS.increment, 1)}>+</Button>
+      <Button onClick={handleIncrement}>+</Button>
       <Typography>{value}</Typography>
-      <Button onClick={() => store.publish(ACTIONS.decrement, 1)}>-</Button>
+      <Button onClick={handleDecrement}>-</Button>
+      <Button onClick={handleSubscribe}>Subscribe</Button>
+      <Button onClick={handleUnsubscribe}>Unsubscribe</Button>
     </Box>
   );
 };
