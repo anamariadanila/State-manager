@@ -1,7 +1,7 @@
 import { ACTIONS } from "../constants";
 
 class MainStore {
-  counterValue = 0;
+  counterValue = 100;
   subs = [];
 
   get getCounter() {
@@ -25,9 +25,9 @@ class MainStore {
   subscribe(id, fn) {
     if (this.isSubscribed(id)) {
       console.log("Already subscribed this component!");
+    } else {
+      this.subs.push({ id: id, callback: fn });
     }
-
-    this.subs.push({ id: id, callback: fn });
   }
 
   unsubscribe(id) {

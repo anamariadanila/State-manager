@@ -6,19 +6,28 @@ import Box from "@mui/material/Box";
 
 const GlobalCountDisplayer = () => {
   const { store } = useContext(CounterContext);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(store.getCounter);
 
   const callback = (data) => {
     setValue(data);
   };
 
   useEffect(() => {
-    store.subscribe("secondCounter", callback);
+    store.subscribe("globalCounter", callback);
   }, [store]);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      <Typography>{value}</Typography>
+    <Box
+      sx={{
+        margin: "20px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography variant="h3">Global Counter Value</Typography>
+
+      <Typography fontSize="150px">{value}</Typography>
     </Box>
   );
 };
